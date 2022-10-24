@@ -7,10 +7,12 @@ export default function AllHabitsAllTime(props) {
   const { CardsHabits, setCardsHabits } = props;
 
   function DeleteHabit(id) {
-    const NewArray = CardsHabits.filter(function (element) {
-      return element.id !== id;
-    });
-    setCardsHabits(NewArray);
+    if (window.confirm("Você tem certeza?") === true) {
+      const NewArray = CardsHabits.filter(function (element) {
+        return element.id !== id;
+      });
+      setCardsHabits(NewArray);
+    }
   }
 
   return (

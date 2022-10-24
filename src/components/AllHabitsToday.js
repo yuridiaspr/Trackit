@@ -6,24 +6,34 @@ import {
   CheckedHabits,
 } from "../constants/colors";
 import Vector from "../assets/images/VectorCheck.svg";
+import { useState } from "react";
 
 export default function AllHabitsToday(props) {
-  const { current, record, checked } = props;
+  const { Habit } = props;
 
+  function IsRecord(habit) {
+    if (Concluded === true && habit.currentSequence === habit.highestSequence) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const [Concluded, setConcluded] = useState(Habit.done);
   return (
-    <EachHabit current={current} record={record} checked={checked}>
+    <EachHabit current={Concluded} record={IsRecord(Habit)} checked={Concluded}>
       <div>
-        <h1>Ler 1 capítulo de livroaaaaaaaaaaaaaaaaa</h1>
+        <h1>{Habit.name}</h1>
         <div>
           <pre>Sequência atual: </pre>
-          <h2>3 dias</h2>
+          <h2>{Habit.currentSequence} dias</h2>
         </div>
         <div>
           <pre>Seu recorde: </pre>
-          <h3>5 dias</h3>
+          <h3>{Habit.highestSequence} dias</h3>
         </div>
       </div>
-      <CheckBox checked={checked}>
+      <CheckBox onClick={() => setConcluded(!Concluded)} checked={Concluded}>
         <img src={Vector} />
       </CheckBox>
     </EachHabit>
@@ -31,7 +41,6 @@ export default function AllHabitsToday(props) {
 }
 
 const EachHabit = styled.div`
-  display: flex;
   position: relative;
   width: 100%;
   min-height: 94px;
@@ -45,20 +54,21 @@ const EachHabit = styled.div`
   h1 {
     font-family: "Lexend Deca", sans-serif;
     overflow-wrap: break-word;
-    width: calc(90% - 95px);
+    width: calc(100% - 100px);
     font-style: normal;
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
     color: ${DescriptionTextColor};
 
+    display: inline-block;
     margin-top: 15px;
     margin-bottom: 7px;
   }
   div > div {
     margin-left: 0px;
     display: flex;
-    width: calc(90% - 95px);
+    width: calc(100% - 100px);
   }
   pre,
   h2,

@@ -11,7 +11,6 @@ import {
   NewHabit,
   NoHabits,
 } from "./HabitsStyled";
-
 import { useState } from "react";
 
 export default function Habits() {
@@ -39,12 +38,13 @@ export default function Habits() {
     false,
     false,
   ]);
-  const [CardsHabits, setCardsHabits] = useState(TodosHabitos);
-  const [AddHabitsButton, setAddHabitsButton] = useState();
-  const [HabitName, setHabitName] = useState("");
 
   const TextNoHabits =
     "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
+
+  const [CardsHabits, setCardsHabits] = useState(TodosHabitos);
+  const [AddHabitsButton, setAddHabitsButton] = useState();
+  const [HabitName, setHabitName] = useState("");
 
   function SelectEachDay(event, i) {
     event.preventDefault();
