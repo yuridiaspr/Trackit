@@ -1,53 +1,39 @@
-import { Link } from "react-router-dom";
 import Upside from "../../components/Upside";
 import Footer from "../../components/Footer";
 import { Container } from "../../components/BodyContainer";
-import { NavContainer } from "../../components/NavContainer";
 import { Header, ListHabits } from "./TodayStyled";
 import AllHabitsToday from "../../components/AllHabitsToday";
 import { NoHabits } from "../2-Habits/HabitsStyled";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { URL_Today } from "../../constants/urls";
 
-export default function Today() {
-  const TodayHabits = [
-    {
-      id: 3,
-      name: "Acordar",
-      done: true,
-      currentSequence: 1,
-      highestSequence: 1,
-    },
-    {
-      id: 4,
-      name: "Dormir no Horário",
-      done: false,
-      currentSequence: 5,
-      highestSequence: 5,
-    },
-    {
-      id: 5,
-      name: "Preparar lanche",
-      done: true,
-      currentSequence: 5,
-      highestSequence: 5,
-    },
-    {
-      id: 6,
-      name: "Exercicios",
-      done: true,
-      currentSequence: 2,
-      highestSequence: 10,
-    },
-  ];
+export default function Today({ Token }) {
+  const [TodayHabits, setTodayHabits] = useState([]);
 
   const TextNoHabits =
     "Você não tem nenhum hábito cadastrado hoje. Bom descanso!";
 
+  useEffect(() => {
+    const URL = URL_Today;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    };
+
+    const promise = axios.get(URL, config);
+
+    promise.then((res) => {
+      setTodayHabits(res.data);
+    });
+
+    promise.catch((err) => console.log(err.response.data));
+  }, []);
+
   return (
     <Container>
-      <NavContainer>
-        <Link to="/habitos">HABITOS</Link>
-        <Link to="/historico">HISTÓRICO</Link>
-      </NavContainer>
       <Upside />
       <Header selected={false}>
         <h1>Segunda, 17/05</h1>

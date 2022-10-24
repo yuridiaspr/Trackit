@@ -2,40 +2,73 @@ import { Container, MainLogo, Form, Register } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { URL_Register } from "../../constants/urls";
 
 export default function Registration() {
+  const navigate = useNavigate();
+
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Name, setName] = useState("");
+  const [PictureURL, setPictureURL] = useState("");
+
+  function SubmitData() {
+    axios
+      .post(URL_Register, {
+        email: Email,
+        name: Name,
+        image: PictureURL,
+        password: Password,
+      })
+      .then(() => navigate("/"))
+      .catch((err) => alert(err.response.data.message));
+  }
+
   return (
-    <>
-      <NavContainer>
-        <Link to="/">INICIAL</Link>
-        <Link to="/habitos">HABITOS</Link>
-      </NavContainer>
-      <Container>
-        <MainLogo src={Logo} />
-        <Form>
-          <input placeholder="   email" type="email" />
-          <input placeholder="   senha" type="password" />
-          <input placeholder="   nome" type="text" />
-          <input placeholder="   foto" alt="text" type="url" />
-          <button type="submit">Cadastrar</button>
-        </Form>
-        <Register>Já tem uma conta? Faça login!</Register>
-      </Container>
-    </>
+    <Container>
+      <MainLogo src={Logo} />
+      <Form>
+        <input
+          data-identifier="input-email"
+          placeholder="   email"
+          type="email"
+          value={Email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          data-identifier="input-password"
+          placeholder="   senha"
+          type="password"
+          value={Password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          data-identifier="input-name"
+          placeholder="   nome"
+          type="text"
+          value={Name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          data-identifier="input-photo"
+          placeholder="   foto"
+          type="url"
+          value={PictureURL}
+          onChange={(e) => setPictureURL(e.target.value)}
+        />
+        <button onClick={() => SubmitData()} type="submit">
+          Cadastrar
+        </button>
+      </Form>
+      <Register
+        data-identifier="back-to-login-action"
+        onClick={() => navigate("/")}
+      >
+        Já tem uma conta? Faça login!
+      </Register>
+    </Container>
   );
 }
-
-const NavContainer = styled.div`
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  font-family: "Roboto", sans-serif;
-  font-size: 34px;
-  position: fixed;
-  top: 0;
-  a {
-    text-decoration: none;
-  }
-`;

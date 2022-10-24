@@ -1,17 +1,11 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Upside from "../../components/Upside";
 import Footer from "../../components/Footer";
 import { Container } from "../../components/BodyContainer";
-import { NavContainer } from "../../components/NavContainer";
 import { Header, NoHistoric } from "./HistoricStyled";
 
-export default function Historic() {
+export default function Historic({ Token }) {
   return (
     <Container>
-      <NavContainer>
-        <Link to="/hoje">HOJE</Link>X
-      </NavContainer>
       <Upside />
       <Header>
         <h1>Histórico</h1>

@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { BackgroundWhite, DescriptionTextColor } from "../constants/colors";
 import Trash from "../assets/images/GroupTrash.svg";
 import { ButtonDay } from "../pages/2-Habits/HabitsStyled";
+import axios from "axios";
 
 export default function AllHabitsAllTime(props) {
-  const { CardsHabits, setCardsHabits } = props;
+  const { CardsHabits, setCardsHabits, config, URL_Habit } = props;
 
   function DeleteHabit(id) {
     if (window.confirm("Você tem certeza?") === true) {
@@ -12,6 +13,9 @@ export default function AllHabitsAllTime(props) {
         return element.id !== id;
       });
       setCardsHabits(NewArray);
+      console.log(URL_Habit + `/${id}`);
+      const promisse = axios.delete(URL_Habit + `/${id}`, config);
+      promisse.catch((err) => alert(err.response.data.message));
     }
   }
 

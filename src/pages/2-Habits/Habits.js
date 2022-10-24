@@ -1,8 +1,6 @@
-import { Link } from "react-router-dom";
 import Upside from "../../components/Upside";
 import Footer from "../../components/Footer";
 import { Container } from "../../components/BodyContainer";
-import { NavContainer } from "../../components/NavContainer";
 import AllHabitsAllTime from "../../components/AllHabitsAllTime";
 import {
   AddHabits,
@@ -11,24 +9,11 @@ import {
   NewHabit,
   NoHabits,
 } from "./HabitsStyled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { URL_Habit } from "../../constants/urls";
 
-export default function Habits() {
-  // useState:Habits array vazia? Mostrar NoHabits
-
-  const TodosHabitos = [
-    {
-      id: 1,
-      name: "Nome do hábito",
-      days: [1, 3, 5],
-    },
-    {
-      id: 2,
-      name: "Nome do hábito 2",
-      days: [1, 3, 4, 6],
-    },
-  ];
-
+export default function Habits({ Token }) {
   const [DaysWeek, setDaysWeek] = useState([
     false,
     false,
@@ -38,13 +23,28 @@ export default function Habits() {
     false,
     false,
   ]);
+  const [CardsHabits, setCardsHabits] = useState([]);
+  const [AddHabitsButton, setAddHabitsButton] = useState(false);
+  const [HabitName, setHabitName] = useState("");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  };
+
+  useEffect(() => {
+    const promisse = axios.get(URL_Habit, config);
+
+    promisse.then((res) => {
+      setCardsHabits(res.data);
+    });
+
+    promisse.catch((err) => alert(err.response.data.message));
+  }, []);
 
   const TextNoHabits =
     "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
-
-  const [CardsHabits, setCardsHabits] = useState(TodosHabitos);
-  const [AddHabitsButton, setAddHabitsButton] = useState();
-  const [HabitName, setHabitName] = useState("");
 
   function SelectEachDay(event, i) {
     event.preventDefault();
@@ -64,23 +64,27 @@ export default function Habits() {
       }
     }
 
-    let NewArray = [
-      ...CardsHabits,
+    let NewArray =
+      // ...CardsHabits,
       {
-        id: 3,
         name: HabitName,
         days: HabitDays,
-      },
-    ];
-    setCardsHabits(NewArray);
+      };
+    // setCardsHabits(NewArray);
+    const promisse = axios.post(URL_Habit, NewArray, config);
+    promisse.then((res) => {
+      // setCardsHabits(CardsHabits.push(res.data));
+      setHabitName("");
+      setAddHabitsButton(false);
+      setDaysWeek([false, false, false, false, false, false, false]);
+    });
+    promisse.catch((err) => alert(err.response.data.message));
+
+    // .then((res) => setCardsHabits(CardsHabits.push(res.data)))
   }
 
   return (
     <Container>
-      <NavContainer>
-        <Link to="/cadastro">CADASTRO</Link>
-        <Link to="/hoje">HOJE</Link>
-      </NavContainer>
       <Upside />
       <AddHabits>
         <p>Meus hábitos</p>
@@ -152,6 +156,8 @@ export default function Habits() {
         <AllHabitsAllTime
           CardsHabits={CardsHabits}
           setCardsHabits={setCardsHabits}
+          URL_Habit={URL_Habit}
+          config={config}
         />
       ) : (
         <NoHabits>{TextNoHabits}</NoHabits>
