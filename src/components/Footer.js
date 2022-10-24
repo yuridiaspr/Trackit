@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import { MainColor, BackgroundWhite } from "../constants/colors";
-import Logo from "../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Header>
-        <p>Hábitos</p>
-        <Today>
+        <p onClick={() => navigate("/habitos")}>Hábitos</p>
+        <Today onClick={() => navigate("/hoje")}>
           <p>Hoje</p>
         </Today>
-        <p>Histórico</p>
+        <p onClick={() => navigate("/historico")}>Histórico</p>
       </Header>
     </Container>
   );

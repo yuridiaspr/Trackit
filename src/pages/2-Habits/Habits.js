@@ -3,29 +3,77 @@ import Upside from "../../components/Upside";
 import Footer from "../../components/Footer";
 import { Container } from "../../components/BodyContainer";
 import { NavContainer } from "../../components/NavContainer";
+import AllHabitsAllTime from "../../components/AllHabitsAllTime";
 import {
   AddHabits,
   ButtonDay,
   CancelOrSaveContainer,
-  ExistingHabits,
   NewHabit,
   NoHabits,
 } from "./HabitsStyled";
-import Trash from "../../assets/images/GroupTrash.svg";
+
+import { useState } from "react";
 
 export default function Habits() {
   // useState:Habits array vazia? Mostrar NoHabits
 
-  // useState: RegisterNewHabit
-  // onclick: Register New Habit
+  const TodosHabitos = [
+    {
+      id: 1,
+      name: "Nome do hábito",
+      days: [1, 3, 5],
+    },
+    {
+      id: 2,
+      name: "Nome do hábito 2",
+      days: [1, 3, 4, 6],
+    },
+  ];
 
-  // usestate: Selected (cada botão)
-  // onclick setSelected(!selected)
-
-  // onSubmit (guardar na array)
+  const [DaysWeek, setDaysWeek] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [CardsHabits, setCardsHabits] = useState(TodosHabitos);
+  const [AddHabitsButton, setAddHabitsButton] = useState();
+  const [HabitName, setHabitName] = useState("");
 
   const TextNoHabits =
     "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
+
+  function SelectEachDay(event, i) {
+    event.preventDefault();
+    let NewArray = [...DaysWeek];
+    NewArray[i] = !DaysWeek[i];
+    setDaysWeek(NewArray);
+  }
+
+  function CreateNewHabit(event) {
+    event.preventDefault();
+
+    let HabitDays = [];
+
+    for (let j = 0; j < 7; j++) {
+      if (DaysWeek[j] === true) {
+        HabitDays.push(j);
+      }
+    }
+
+    let NewArray = [
+      ...CardsHabits,
+      {
+        id: 3,
+        name: HabitName,
+        days: HabitDays,
+      },
+    ];
+    setCardsHabits(NewArray);
+  }
 
   return (
     <Container>
@@ -36,66 +84,78 @@ export default function Habits() {
       <Upside />
       <AddHabits>
         <p>Meus hábitos</p>
-        <button>
+        <button onClick={() => setAddHabitsButton(!AddHabitsButton)}>
           <p>+</p>
         </button>
       </AddHabits>
-      <NewHabit>
-        <input placeholder="  nome do hábito" />
-        <div>
-          <ButtonDay selected={false}>D</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>T</ButtonDay>
-          <ButtonDay selected={true}>Q</ButtonDay>
-          <ButtonDay selected={false}>Q</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>S</ButtonDay>
-        </div>
-        <CancelOrSaveContainer>
-          <button>Cancelar</button>
-          <button>Salvar</button>
-        </CancelOrSaveContainer>
-      </NewHabit>
-      <ExistingHabits>
-        <p>Ler 1 capítulo de livro</p>
-        <div>
-          <ButtonDay selected={false}>D</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>T</ButtonDay>
-          <ButtonDay selected={true}>Q</ButtonDay>
-          <ButtonDay selected={false}>Q</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>S</ButtonDay>
-        </div>
-        <img src={Trash} alt="Trash Button" />
-      </ExistingHabits>
-      <ExistingHabits>
-        <p>Ler 1 capítulo de livro</p>
-        <div>
-          <ButtonDay selected={false}>D</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>T</ButtonDay>
-          <ButtonDay selected={true}>Q</ButtonDay>
-          <ButtonDay selected={false}>Q</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>S</ButtonDay>
-        </div>
-        <img src={Trash} alt="Trash Button" />
-      </ExistingHabits>
-      <ExistingHabits>
-        <p>Ler 1 capítulo de livro</p>
-        <div>
-          <ButtonDay selected={false}>D</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>T</ButtonDay>
-          <ButtonDay selected={true}>Q</ButtonDay>
-          <ButtonDay selected={false}>Q</ButtonDay>
-          <ButtonDay selected={true}>S</ButtonDay>
-          <ButtonDay selected={false}>S</ButtonDay>
-        </div>
-        <img src={Trash} alt="Trash Button" />
-      </ExistingHabits>
-      <NoHabits>{TextNoHabits}</NoHabits>
+      {AddHabitsButton ? (
+        <NewHabit onSubmit={CreateNewHabit}>
+          <input
+            placeholder="  nome do hábito"
+            type="text"
+            value={HabitName}
+            onChange={(e) => setHabitName(e.target.value)}
+          />
+          <div>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 0)}
+              selected={DaysWeek[0]}
+            >
+              D
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 1)}
+              selected={DaysWeek[1]}
+            >
+              S
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 2)}
+              selected={DaysWeek[2]}
+            >
+              T
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 3)}
+              selected={DaysWeek[3]}
+            >
+              Q
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 4)}
+              selected={DaysWeek[4]}
+            >
+              Q
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 5)}
+              selected={DaysWeek[5]}
+            >
+              S
+            </ButtonDay>
+            <ButtonDay
+              onClick={(event) => SelectEachDay(event, 6)}
+              selected={DaysWeek[6]}
+            >
+              S
+            </ButtonDay>
+          </div>
+          <CancelOrSaveContainer>
+            <button onClick={() => setAddHabitsButton(false)}>Cancelar</button>
+            <button type="submit">Salvar</button>
+          </CancelOrSaveContainer>
+        </NewHabit>
+      ) : (
+        <></>
+      )}
+      {CardsHabits.length !== 0 ? (
+        <AllHabitsAllTime
+          CardsHabits={CardsHabits}
+          setCardsHabits={setCardsHabits}
+        />
+      ) : (
+        <NoHabits>{TextNoHabits}</NoHabits>
+      )}
       <Footer />
     </Container>
   );

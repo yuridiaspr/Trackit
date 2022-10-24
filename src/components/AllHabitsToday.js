@@ -7,7 +7,7 @@ import {
 } from "../constants/colors";
 import Vector from "../assets/images/VectorCheck.svg";
 
-export default function AllHabits(props) {
+export default function AllHabitsToday(props) {
   const { current, record, checked } = props;
 
   return (

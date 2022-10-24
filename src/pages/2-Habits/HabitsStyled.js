@@ -149,38 +149,3 @@ export const CancelOrSaveContainer = styled.div`
     }
   }
 `;
-
-export const ExistingHabits = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
-  height: 91px;
-  background-color: ${BackgroundWhite};
-  border-radius: 5px;
-  margin-bottom: 10px;
-  p {
-    width: 90%;
-    font-family: "Lexend Deca", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
-    color: ${DescriptionTextColor};
-
-    margin-top: 15px;
-    margin-bottom: 8px;
-  }
-  div {
-    width: 90%;
-  }
-  img {
-    position: absolute;
-    top: 11px;
-    right: 10px;
-    height: 15px;
-    width: 13px;
-    border-radius: 0px;
-  }
-`;
