@@ -54,26 +54,6 @@ export const Form = styled.div`
       color: ${RegistrationTextColor};
     }
   }
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    margin-bottom: 25px;
-    height: 45px;
-    width: 100%;
-    border-radius: 4.636363506317139px;
-    background-color: ${MainColor};
-    border: none;
-
-    color: ${BackgroundWhite};
-    font-family: "Lexend Deca", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20.976px;
-    line-height: 26px;
-    text-align: center;
-  }
 `;
 
 export const Register = styled(Link)`
@@ -86,4 +66,38 @@ export const Register = styled(Link)`
   text-decoration-line: underline;
 
   color: ${MainColor};
+
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+`;
+
+export const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-bottom: 25px;
+  height: 45px;
+  width: 100%;
+  border-radius: 4.636363506317139px;
+  background-color: ${MainColor};
+  border: none;
+
+  color: ${BackgroundWhite};
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20.976px;
+  line-height: 26px;
+  text-align: center;
+
+  pointer-events: ${(props) => (props.disabled ? "none" : "all")};
+  opacity: ${(props) => (props.disabled ? 0.7 : 1)};
+
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 `;

@@ -1,4 +1,10 @@
-import { Container, MainLogo, Form, Register } from "./InitialPageStyled";
+import {
+  Container,
+  MainLogo,
+  Form,
+  Register,
+  StyledButton,
+} from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -59,9 +65,9 @@ export default function Registration() {
           value={PictureURL}
           onChange={(e) => setPictureURL(e.target.value)}
         />
-        <button onClick={() => SubmitData()} type="submit">
+        <StyledButton onClick={() => SubmitData()} type="submit">
           Cadastrar
-        </button>
+        </StyledButton>
       </Form>
       <Register to="/" data-identifier="back-to-login-action">
         Já tem uma conta? Faça login!

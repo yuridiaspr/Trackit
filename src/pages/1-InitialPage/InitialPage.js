@@ -1,4 +1,10 @@
-import { Container, MainLogo, Form, Register } from "./InitialPageStyled";
+import {
+  Container,
+  MainLogo,
+  Form,
+  Register,
+  StyledButton,
+} from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -43,9 +49,9 @@ export default function InitialPage({ setToken }) {
           value={Password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button data-identifier="login-btn" onClick={login} type="submit">
+        <StyledButton data-identifier="login-btn" onClick={login} type="submit">
           Entrar
-        </button>
+        </StyledButton>
       </Form>
       <Register to="/cadastro" data-identifier="sign-up-action">
         Não tem uma conta? Cadastre-se!
