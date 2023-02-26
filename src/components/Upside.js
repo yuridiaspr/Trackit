@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { SecundaryColor, BackgroundWhite } from "../constants/colors";
 import Logo from "../assets/images/logo.png";
 
@@ -6,7 +7,7 @@ export default function Upside() {
   return (
     <Container>
       <Header>
-        <p>Trackit</p>
+        <StyledLink to="/hoje">Trackit</StyledLink>
         <img src={Logo} />
       </Header>
     </Container>
@@ -39,5 +40,14 @@ const Header = styled.div`
     border-radius: 98.5px;
     width: 51px;
     height: 51px;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${BackgroundWhite};
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
   }
 `;

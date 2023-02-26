@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MainColor, BackgroundWhite } from "../constants/colors";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -8,11 +9,11 @@ export default function Footer() {
   return (
     <Container>
       <Header>
-        <p onClick={() => navigate("/habitos")}>Hábitos</p>
+        <StyledLink to="/habitos">Hábitos</StyledLink>
         <Today onClick={() => navigate("/hoje")}>
           <p>Hoje</p>
         </Today>
-        <p onClick={() => navigate("/historico")}>Histórico</p>
+        <StyledLink to="/historico">Histórico</StyledLink>
       </Header>
     </Container>
   );
@@ -47,14 +48,28 @@ const Header = styled.div`
   }
 `;
 
-const Today = styled.div`
+const Today = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
   background-color: ${MainColor};
   margin-bottom: 50px;
   width: 91px;
   height: 91px;
   color: ${BackgroundWhite};
   border-radius: 50px;
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+`;
+
+const StyledLink = styled(Link)`
+  color: ${MainColor};
+  text-decoration: none;
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 `;

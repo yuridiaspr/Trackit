@@ -63,10 +63,7 @@ export default function Registration() {
           Cadastrar
         </button>
       </Form>
-      <Register
-        data-identifier="back-to-login-action"
-        onClick={() => navigate("/")}
-      >
+      <Register to="/" data-identifier="back-to-login-action">
         Já tem uma conta? Faça login!
       </Register>
     </Container>

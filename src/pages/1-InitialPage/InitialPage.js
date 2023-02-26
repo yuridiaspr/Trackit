@@ -1,7 +1,6 @@
 import { Container, MainLogo, Form, Register } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
@@ -48,10 +47,7 @@ export default function InitialPage({ setToken }) {
           Entrar
         </button>
       </Form>
-      <Register
-        data-identifier="sign-up-action"
-        onClick={() => navigate("/cadastro")}
-      >
+      <Register to="/cadastro" data-identifier="sign-up-action">
         Não tem uma conta? Cadastre-se!
       </Register>
     </Container>

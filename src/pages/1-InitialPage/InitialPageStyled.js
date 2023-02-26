@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   MainColor,
@@ -75,7 +76,7 @@ export const Form = styled.div`
   }
 `;
 
-export const Register = styled.p`
+export const Register = styled(Link)`
   font-family: "Lexend Deca", sans-serif;
   font-style: normal;
   font-weight: 400;
