@@ -1,7 +1,7 @@
 import {
   Container,
   MainLogo,
-  Form,
+  StyledForm,
   Register,
   StyledButton,
   StyledInput,
@@ -37,7 +37,7 @@ export default function Registration() {
   return (
     <Container>
       <MainLogo src={Logo} />
-      <Form>
+      <StyledForm>
         <StyledInput
           data-identifier="input-email"
           placeholder="   email"
@@ -69,7 +69,7 @@ export default function Registration() {
         <StyledButton onClick={() => SubmitData()} type="submit">
           Cadastrar
         </StyledButton>
-      </Form>
+      </StyledForm>
       <Register to="/" data-identifier="back-to-login-action">
         Já tem uma conta? Faça login!
       </Register>

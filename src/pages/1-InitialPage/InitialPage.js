@@ -1,7 +1,7 @@
 import {
   Container,
   MainLogo,
-  Form,
+  StyledForm,
   Register,
   StyledButton,
   StyledInput,
@@ -44,7 +44,7 @@ export default function InitialPage({ setToken }) {
   return (
     <Container>
       <MainLogo src={Logo} />
-      <Form onSubmit={handleLogin}>
+      <StyledForm onSubmit={handleLogin}>
         <StyledInput
           data-identifier="input-email"
           name="email"
@@ -76,7 +76,7 @@ export default function InitialPage({ setToken }) {
             "Entrar"
           )}
         </StyledButton>
-      </Form>
+      </StyledForm>
 
       <Register to="/cadastro" data-identifier="sign-up-action">
         Não tem uma conta? Cadastre-se!
