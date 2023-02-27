@@ -85,7 +85,7 @@ const Form = styled.form`
   width: 100%;
   height: 180px;
   margin-bottom: 5px;
-  padding: 18px;
+  padding: 15px;
   background: #ffffff;
   border-radius: 5px;
 `;

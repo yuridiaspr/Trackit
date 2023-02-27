@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import checkIcon from "../../assets/check.svg";
-import { UserContext } from "../../contexts/UserContext";
-import apiToday from "../../services/apiToday";
+import checkIcon from "../assets/images/check.svg";
+import { UserContext } from "../contexts/UserContext";
+import apiToday from "../services/apiToday";
 import styled from "styled-components";
 
 export default function HabitCheckCard({
