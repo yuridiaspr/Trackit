@@ -8,10 +8,9 @@ import {
 } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
-import { URL_Register } from "../../constants/urls";
 import { ThreeDots } from "react-loader-spinner";
+import apiAuth from "../../services/apiAuth";
 
 export default function Registration() {
   const navigate = useNavigate();
@@ -32,8 +31,8 @@ export default function Registration() {
     e.preventDefault();
     setIsLoading(true);
 
-    axios
-      .post(URL_Register, form)
+    apiAuth
+      .signUp(form)
       .then(() => {
         setIsLoading(false);
         navigate("/");
@@ -84,6 +83,8 @@ export default function Registration() {
           value={form.image}
           onChange={handleForm}
         />
+
+        {/* Adiciona Efeito Loading */}
         <StyledButton type="submit" disabled={isLoading}>
           {isLoading ? (
             <ThreeDots width={50} height={50} color="#FFFFFF" />

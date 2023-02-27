@@ -8,10 +8,8 @@ import {
 } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { URL_Login } from "../../constants/urls";
 import { ThreeDots } from "react-loader-spinner";
 import apiAuth from "../../services/apiAuth";
 
@@ -38,6 +36,7 @@ export default function InitialPage({ setToken }) {
         const { id, name, image, token } = res.data;
         setIsLoading(false);
         setUser({ id, name, image, token });
+        // Guarda dados usuario no no Local Storage (Persistencia Login)
         localStorage.setItem(
           "user",
           JSON.stringify({ id, name, image, token })
@@ -74,6 +73,8 @@ export default function InitialPage({ setToken }) {
           value={form.password}
           onChange={handleForm}
         />
+
+        {/* Adiciona Efeito Loading */}
         <StyledButton
           data-identifier="login-btn"
           type="submit"

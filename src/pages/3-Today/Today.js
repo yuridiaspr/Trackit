@@ -9,15 +9,7 @@ import apiToday from "../../services/apiToday";
 import dayjs from "dayjs";
 import weekDays from "../../constants/weekDays";
 import { ProgressContext } from "../../contexts/ProgressContext";
-import Upside from "../../components/Upside";
-import Footer from "../../components/Footer";
-import { Container } from "../../components/BodyContainer";
-import { Header, ListHabits, HabitsAmountText } from "./TodayStyled";
-import AllHabitsToday from "../../components/AllHabitsToday";
-import { NoHabits } from "../2-Habits/HabitsStyled";
-
-import axios from "axios";
-import { URL_Today } from "../../constants/urls";
+import { HabitsAmountText } from "./TodayStyled";
 
 export default function TodayPage() {
   const [habits, setHabits] = useState([]);
@@ -35,6 +27,9 @@ export default function TodayPage() {
         const apiHabits = res.data;
         setHabits(apiHabits);
 
+        {
+          /* Calcula a % de progresso */
+        }
         const doneHabits = apiHabits.filter((h) => h.done === true);
         const calc = ((doneHabits.length / apiHabits.length) * 100).toFixed(0);
         setProgress(calc);
@@ -53,15 +48,17 @@ export default function TodayPage() {
     <ScreenWithBars>
       <>
         <StyledTitle>
+          {/* Nome do dia da semana, Dia do Mês / Mês */}
           {weekDays[dayjs().day()].name}, {dayjs().date()}/{dayjs().month() + 1}{" "}
         </StyledTitle>
         <HabitsAmountText doneAmount={progress}>
-          {progress === 0
+          {progress == 0 || isNaN(progress)
             ? "Nenhum hábito concluído ainda"
             : `${progress}% dos hábitos concluídos`}
         </HabitsAmountText>
       </>
 
+      {/* Adiciona Efeito Loading */}
       {isLoading ? (
         <ThreeDots height={80} width={80} color={"#126ba5"} />
       ) : habits.length === 0 ? (
