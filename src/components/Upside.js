@@ -1,14 +1,22 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { SecundaryColor, BackgroundWhite } from "../constants/colors";
-import Logo from "../assets/images/logo.png";
+import User from "../assets/images/User.jpg";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Upside() {
+  const { user } = useContext(UserContext);
+  console.log("user.image", user.image);
   return (
     <Container>
       <Header>
         <StyledLink to="/hoje">Trackit</StyledLink>
-        <img src={Logo} />
+        {user.image === undefined ? (
+          <img src={User} />
+        ) : (
+          <img src={user.image} />
+        )}
       </Header>
     </Container>
   );
