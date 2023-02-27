@@ -1,18 +1,38 @@
 import styled from "styled-components";
 import { MainColor, BackgroundWhite } from "../constants/colors";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { useContext } from "react";
+import { ProgressContext } from "../contexts/ProgressContext";
 
 export default function Footer() {
-  const navigate = useNavigate();
+  const { progress } = useContext(ProgressContext);
 
   return (
     <Container>
       <Header>
         <StyledLink to="/habitos">Hábitos</StyledLink>
-        <Today onClick={() => navigate("/hoje")}>
-          <p>Hoje</p>
-        </Today>
+
+        <ContentProgressbar>
+          <CircularProgressbarContainer>
+            <Link to="/hoje">
+              <CircularProgressbar
+                value={progress}
+                text={"Hoje"}
+                background
+                backgroundPadding={6}
+                styles={buildStyles({
+                  backgroundColor: "#3e98c7",
+                  textColor: "#fff",
+                  pathColor: "#fff",
+                  trailColor: "transparent",
+                })}
+              />
+            </Link>
+          </CircularProgressbarContainer>
+        </ContentProgressbar>
+
         <StyledLink to="/historico">Histórico</StyledLink>
       </Header>
     </Container>
@@ -63,6 +83,20 @@ const Today = styled(Link)`
     opacity: 0.8;
     transform: scale(1.1);
   }
+`;
+
+export const ContentProgressbar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const CircularProgressbarContainer = styled.div`
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: -30px;
 `;
 
 const StyledLink = styled(Link)`
