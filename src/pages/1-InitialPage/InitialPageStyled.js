@@ -28,32 +28,6 @@ export const Form = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 33px;
-  input {
-    margin-bottom: 6px;
-
-    box-sizing: border-box;
-    width: 303px;
-    height: 45px;
-
-    background: ${BackgroundWhite};
-    border: 1px solid ${RegistrationBorderColor};
-    border-radius: 5px;
-
-    font-family: "Lexend Deca", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19.976px;
-    line-height: 25px;
-
-    ::placeholder {
-      font-family: "Lexend Deca", sans-serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 19.976px;
-      line-height: 25px;
-      color: ${RegistrationTextColor};
-    }
-  }
 `;
 
 export const Register = styled(Link)`
@@ -99,5 +73,36 @@ export const StyledButton = styled.button`
   &:hover {
     opacity: 0.8;
     transform: scale(1.1);
+  }
+`;
+
+export const StyledInput = styled.input`
+  margin-bottom: 6px;
+
+  box-sizing: border-box;
+  width: 303px;
+  height: 45px;
+
+  background: ${BackgroundWhite};
+  border: 1px solid ${RegistrationBorderColor};
+  border-radius: 5px;
+
+  font-family: "Lexend Deca", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+
+  pointer-events: ${(props) => (props.disabled ? "none" : "all")};
+  background-color: ${(props) => (props.disabled ? "#F2F2F2" : "#FFFFFF")};
+  color: ${(props) => (props.disabled ? "#AFAFAF" : "#666666")};
+
+  ::placeholder {
+    font-family: "Lexend Deca", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19.976px;
+    line-height: 25px;
+    color: ${RegistrationTextColor};
   }
 `;

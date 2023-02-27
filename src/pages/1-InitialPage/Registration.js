@@ -4,6 +4,7 @@ import {
   Form,
   Register,
   StyledButton,
+  StyledInput,
 } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
 import styled from "styled-components";
@@ -37,28 +38,28 @@ export default function Registration() {
     <Container>
       <MainLogo src={Logo} />
       <Form>
-        <input
+        <StyledInput
           data-identifier="input-email"
           placeholder="   email"
           type="email"
           value={Email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input
+        <StyledInput
           data-identifier="input-password"
           placeholder="   senha"
           type="password"
           value={Password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input
+        <StyledInput
           data-identifier="input-name"
           placeholder="   nome"
           type="text"
           value={Name}
           onChange={(e) => setName(e.target.value)}
         />
-        <input
+        <StyledInput
           data-identifier="input-photo"
           placeholder="   foto"
           type="url"
