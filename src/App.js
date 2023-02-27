@@ -11,18 +11,21 @@ import { UserContext } from "./contexts/UserContext";
 function App() {
   const [Token, setToken] = useState("");
   const [user, setUser] = useState({});
+  const [progress, setProgress] = useState(0);
 
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <UserContext.Provider value={{ user, setUser }}>
-        <Routes>
-          <Route path="/" element={<InitialPage setToken={setToken} />} />
-          <Route path="/cadastro" element={<SignUp />} />
-          <Route path="/habitos" element={<Habits Token={Token} />} />
-          <Route path="/hoje" element={<Today Token={Token} />} />
-          <Route path="/historico" element={<Historic Token={Token} />} />
-        </Routes>
+      <UserContext.Provider value={{ progress, setProgress }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Routes>
+            <Route path="/" element={<InitialPage setToken={setToken} />} />
+            <Route path="/cadastro" element={<SignUp />} />
+            <Route path="/habitos" element={<Habits Token={Token} />} />
+            <Route path="/hoje" element={<Today Token={Token} />} />
+            <Route path="/historico" element={<Historic Token={Token} />} />
+          </Routes>
+        </UserContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );
