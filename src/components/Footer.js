@@ -68,23 +68,6 @@ const Header = styled.div`
   }
 `;
 
-const Today = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  background-color: ${MainColor};
-  margin-bottom: 50px;
-  width: 91px;
-  height: 91px;
-  color: ${BackgroundWhite};
-  border-radius: 50px;
-  &:hover {
-    opacity: 0.8;
-    transform: scale(1.1);
-  }
-`;
-
 export const ContentProgressbar = styled.div`
   display: flex;
   align-items: center;
@@ -97,6 +80,10 @@ export const CircularProgressbarContainer = styled.div`
   height: 90px;
   position: absolute;
   top: -30px;
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 `;
 
 const StyledLink = styled(Link)`
