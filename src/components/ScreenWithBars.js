@@ -1,4 +1,4 @@
-import Header from "../components/Upside";
+import Header from "./Header";
 import Menu from "../components/Footer";
 import styled from "styled-components";
 

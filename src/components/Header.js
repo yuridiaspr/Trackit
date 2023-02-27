@@ -10,11 +10,15 @@ export default function Upside() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    // Remover informações de autenticação ou sessão do usuário, por exemplo:
-    localStorage.removeItem("user");
+    const confirmed = window.confirm("Você tem certeza que deseja sair?");
 
-    // Redirecionar para a página de login:
-    navigate("/");
+    if (confirmed) {
+      // Remover informações de autenticação ou sessão do usuário, por exemplo:
+      localStorage.removeItem("user");
+
+      // Redirecionar para a página de login:
+      navigate("/");
+    }
   }
   return (
     <Container>
