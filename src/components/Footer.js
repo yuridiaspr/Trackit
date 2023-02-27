@@ -68,14 +68,14 @@ const Header = styled.div`
   }
 `;
 
-export const ContentProgressbar = styled.div`
+const ContentProgressbar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
 `;
 
-export const CircularProgressbarContainer = styled.div`
+const CircularProgressbarContainer = styled.div`
   width: 90px;
   height: 90px;
   position: absolute;

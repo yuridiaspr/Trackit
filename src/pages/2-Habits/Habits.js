@@ -1,168 +1,86 @@
-import Upside from "../../components/Upside";
-import Footer from "../../components/Footer";
-import { Container } from "../../components/BodyContainer";
-import AllHabitsAllTime from "../../components/AllHabitsAllTime";
-import {
-  AddHabits,
-  ButtonDay,
-  CancelOrSaveContainer,
-  NewHabit,
-  NoHabits,
-} from "./HabitsStyled";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { URL_Habit } from "../../constants/urls";
+import HabitCard from "../../components/HabitCard";
+import CreateHabitCard from "../../components/CreateHabitCard";
+import ScreenWithBars from "../../components/ScreenWithBars";
+import plusIcon from "../../assets/images/plus.svg";
+import { CreateHabitContainer, Button } from "./HabitsStyled";
+import StyledTitle from "../../components/StyledTitle";
+import StyledSubtitle from "../../components/StyledSubtitle";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { ThreeDots } from "react-loader-spinner";
+import { ProgressContext } from "../../contexts/ProgressContext";
+import apiToday from "../../services/apiToday";
+import apiHabits from "../../services/apiHabits";
 
-export default function Habits({ Token }) {
-  const [DaysWeek, setDaysWeek] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [CardsHabits, setCardsHabits] = useState([]);
-  const [AddHabitsButton, setAddHabitsButton] = useState(false);
-  const [HabitName, setHabitName] = useState("");
+export default function HabitsPage() {
+  const [habits, setHabits] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [createHabitOpened, setCreateHabitOpened] = useState(false);
+  const { user } = useContext(UserContext);
+  const { setProgress } = useContext(ProgressContext);
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${Token}`,
-    },
-  };
+  useEffect(getHabitsList, []);
 
-  useEffect(() => {
-    const promisse = axios.get(URL_Habit, config);
-
-    promisse.then((res) => {
-      setCardsHabits(res.data);
-    });
-
-    promisse.catch((err) => alert(err.response.data.message));
-  }, []);
-
-  const TextNoHabits =
-    "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
-
-  function SelectEachDay(event, i) {
-    event.preventDefault();
-    let NewArray = [...DaysWeek];
-    NewArray[i] = !DaysWeek[i];
-    setDaysWeek(NewArray);
+  function getTodaysHabits() {
+    apiToday
+      .getToday(user.token)
+      .then((res) => {
+        const apiHabits = res.data;
+        const doneHabits = apiHabits.filter((h) => h.done === true);
+        const calc = ((doneHabits.length / apiHabits.length) * 100).toFixed(0);
+        setProgress(calc);
+      })
+      .catch((err) => alert(err.response.data.message));
   }
 
-  function CreateNewHabit(event) {
-    event.preventDefault();
-
-    let HabitDays = [];
-
-    for (let j = 0; j < 7; j++) {
-      if (DaysWeek[j] === true) {
-        HabitDays.push(j);
-      }
-    }
-
-    let NewArray =
-      // ...CardsHabits,
-      {
-        name: HabitName,
-        days: HabitDays,
-      };
-    // setCardsHabits(NewArray);
-    const promisse = axios.post(URL_Habit, NewArray, config);
-    promisse.then((res) => {
-      // setCardsHabits(CardsHabits.push(res.data));
-      setHabitName("");
-      setAddHabitsButton(false);
-      setDaysWeek([false, false, false, false, false, false, false]);
-    });
-    promisse.catch((err) => alert(err.response.data.message));
-
-    // .then((res) => setCardsHabits(CardsHabits.push(res.data)))
+  function getHabitsList() {
+    apiHabits
+      .getHabits(user.token)
+      .then((res) => {
+        setIsLoading(false);
+        setHabits(res.data);
+        getTodaysHabits();
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert(err.response.data.message);
+      });
   }
 
   return (
-    <Container>
-      <Upside />
-      <AddHabits>
-        <p>Meus hábitos</p>
-        <button onClick={() => setAddHabitsButton(!AddHabitsButton)}>
-          <p>+</p>
-        </button>
-      </AddHabits>
-      {AddHabitsButton ? (
-        <NewHabit onSubmit={CreateNewHabit}>
-          <input
-            placeholder="  nome do hábito"
-            type="text"
-            value={HabitName}
-            onChange={(e) => setHabitName(e.target.value)}
+    <ScreenWithBars>
+      <CreateHabitContainer>
+        <StyledTitle>Meus hábitos</StyledTitle>
+        <Button onClick={() => setCreateHabitOpened(!createHabitOpened)}>
+          <img src={plusIcon} alt="Ícone Adicionar" />
+        </Button>
+      </CreateHabitContainer>
+
+      <CreateHabitCard
+        isOpened={createHabitOpened}
+        setIsOpened={setCreateHabitOpened}
+        getHabitsList={getHabitsList}
+      />
+
+      {isLoading ? (
+        <ThreeDots height={80} width={80} color={"#126ba5"} />
+      ) : habits.length === 0 ? (
+        <StyledSubtitle>
+          Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
+          começar a trackear!
+        </StyledSubtitle>
+      ) : (
+        habits.map((h) => (
+          <HabitCard
+            key={h.id}
+            id={h.id}
+            name={h.name}
+            days={h.days}
+            getHabitsList={getHabitsList}
           />
-          <div>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 0)}
-              selected={DaysWeek[0]}
-            >
-              D
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 1)}
-              selected={DaysWeek[1]}
-            >
-              S
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 2)}
-              selected={DaysWeek[2]}
-            >
-              T
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 3)}
-              selected={DaysWeek[3]}
-            >
-              Q
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 4)}
-              selected={DaysWeek[4]}
-            >
-              Q
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 5)}
-              selected={DaysWeek[5]}
-            >
-              S
-            </ButtonDay>
-            <ButtonDay
-              onClick={(event) => SelectEachDay(event, 6)}
-              selected={DaysWeek[6]}
-            >
-              S
-            </ButtonDay>
-          </div>
-          <CancelOrSaveContainer>
-            <button onClick={() => setAddHabitsButton(false)}>Cancelar</button>
-            <button type="submit">Salvar</button>
-          </CancelOrSaveContainer>
-        </NewHabit>
-      ) : (
-        <></>
+        ))
       )}
-      {CardsHabits.length !== 0 ? (
-        <AllHabitsAllTime
-          CardsHabits={CardsHabits}
-          setCardsHabits={setCardsHabits}
-          URL_Habit={URL_Habit}
-          config={config}
-        />
-      ) : (
-        <NoHabits>{TextNoHabits}</NoHabits>
-      )}
-      <Footer />
-    </Container>
+    </ScreenWithBars>
   );
 }
