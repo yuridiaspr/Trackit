@@ -20,9 +20,9 @@ function App() {
           <Routes>
             <Route path="/" element={<InitialPage setToken={setToken} />} />
             <Route path="/cadastro" element={<SignUp />} />
-            <Route path="/habitos" element={<Habits Token={Token} />} />
-            <Route path="/hoje" element={<Today Token={Token} />} />
-            <Route path="/historico" element={<Historic Token={Token} />} />
+            <Route path="/habitos" element={<Habits />} />
+            <Route path="/hoje" element={<Today />} />
+            <Route path="/historico" element={<Historic />} />
           </Routes>
         </UserProvider>
       </ProgressProvider>

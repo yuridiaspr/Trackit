@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SecundaryColor, BackgroundWhite } from "../constants/colors";
 import User from "../assets/images/User.jpg";
 import { useContext } from "react";
@@ -7,7 +7,15 @@ import { UserContext } from "../contexts/UserContext";
 
 export default function Upside() {
   const { user } = useContext(UserContext);
-  console.log("user.image", user.image);
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    // Remover informações de autenticação ou sessão do usuário, por exemplo:
+    localStorage.removeItem("user");
+
+    // Redirecionar para a página de login:
+    navigate("/");
+  }
   return (
     <Container>
       <Header>
@@ -15,7 +23,7 @@ export default function Upside() {
         {user.image === undefined ? (
           <img src={User} />
         ) : (
-          <img src={user.image} />
+          <img onClick={handleLogout} src={user.image} />
         )}
       </Header>
     </Container>

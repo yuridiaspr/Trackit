@@ -13,6 +13,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { URL_Login } from "../../constants/urls";
 import { ThreeDots } from "react-loader-spinner";
+import apiAuth from "../../services/apiAuth";
 
 export default function InitialPage({ setToken }) {
   const navigate = useNavigate();
@@ -24,22 +25,29 @@ export default function InitialPage({ setToken }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
+  // Função Login
   function handleLogin(e) {
     e.preventDefault();
+
+    // Adiciona efeito Loading
     setIsLoading(true);
 
-    const promisse = axios.post(URL_Login, form);
-    promisse.then((res) => {
-      const { id, name, image, token } = res.data;
-      setIsLoading(false);
-      setUser({ id, name, image, token });
-      localStorage.setItem("user", JSON.stringify({ id, name, image, token }));
-      navigate("/hoje");
-    });
-    promisse.catch((err) => {
-      setIsLoading(false);
-      alert(err.response.data.message);
-    });
+    apiAuth
+      .login(form)
+      .then((res) => {
+        const { id, name, image, token } = res.data;
+        setIsLoading(false);
+        setUser({ id, name, image, token });
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ id, name, image, token })
+        );
+        navigate("/hoje");
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        alert(err.response.data.message);
+      });
   }
 
   return (
