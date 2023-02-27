@@ -7,8 +7,6 @@ import {
   StyledInput,
 } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";

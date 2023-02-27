@@ -7,10 +7,10 @@ import {
   StyledInput,
 } from "./InitialPageStyled";
 import Logo from "../../assets/images/logo.svg";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
 import { URL_Login } from "../../constants/urls";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -18,6 +18,7 @@ export default function InitialPage({ setToken }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   function handleForm(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,9 +30,9 @@ export default function InitialPage({ setToken }) {
 
     const promisse = axios.post(URL_Login, form);
     promisse.then((res) => {
-      setIsLoading(false);
       const { id, name, image, token } = res.data;
-      // localStorage.setItem("token", token)
+      setIsLoading(false);
+      setUser({ id, name, image, token });
       localStorage.setItem("user", JSON.stringify({ id, name, image, token }));
       navigate("/hoje");
     });

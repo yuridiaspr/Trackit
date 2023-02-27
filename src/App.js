@@ -6,20 +6,24 @@ import Habits from "./pages/2-Habits/Habits";
 import Today from "./pages/3-Today/Today";
 import Historic from "./pages/4-Historic/Historic";
 import { useState } from "react";
+import { UserContext } from "./contexts/UserContext";
 
 function App() {
   const [Token, setToken] = useState("");
+  const [user, setUser] = useState({});
 
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<InitialPage setToken={setToken} />} />
-        <Route path="/cadastro" element={<Registration />} />
-        <Route path="/habitos" element={<Habits Token={Token} />} />
-        <Route path="/hoje" element={<Today Token={Token} />} />
-        <Route path="/historico" element={<Historic Token={Token} />} />
-      </Routes>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          <Route path="/" element={<InitialPage setToken={setToken} />} />
+          <Route path="/cadastro" element={<Registration />} />
+          <Route path="/habitos" element={<Habits Token={Token} />} />
+          <Route path="/hoje" element={<Today Token={Token} />} />
+          <Route path="/historico" element={<Historic Token={Token} />} />
+        </Routes>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

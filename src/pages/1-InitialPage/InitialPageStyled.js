@@ -21,7 +21,7 @@ export const MainLogo = styled.img`
   border-radius: 0px;
 `;
 
-export const StyledForm = styled.div`
+export const StyledForm = styled.form`
   width: 303px;
   display: flex;
   flex-direction: column;
